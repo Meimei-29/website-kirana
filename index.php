@@ -1,0 +1,680 @@
+<?php
+
+require_once "configuration/database_connection.php";
+
+?>
+
+<html>
+    <head>
+        <title>KIRANA KEBAYA</title>
+        <style>
+            html {
+                scroll-behavior: smooth;
+                
+                
+            }
+            .container {
+                width: 100%;
+                min-height: 100vh;
+                background-color: #8A2BE2;
+                border-radius: 10px;  
+                display:flex;
+                flex-direction: column; 
+                gap : 20px;
+                padding-bottom: -65px;
+                overflow: auto;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            /** styling navbar */
+            .nav {
+                position: fixed;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #9400D3;
+                padding-bottom: 5px;
+                margin: 0 !important;
+                overflow: hidden;
+                list-style-type: none;
+                opacity : .7;
+                z-index: 10;
+            }
+            .navbar {
+                margin-left: auto;
+                display: flex;
+                
+            }
+            .navbar ul {
+                display: flex;
+                list-style-type: none;
+                position: relative;
+                display: inline-table;
+            }
+            .navbar li {
+                margin-left: auto;
+                list-style-type: none;
+                padding-right: 40px;
+            }
+            .navbar li a {
+                display: block;
+                text-align: center;
+                color: #fff;
+                padding: 16px;
+                text-decoration: none;
+                font-size: 1.2rem;
+            }
+            .navbar li a:hover {
+                background-color: black;
+                opacity: .17;
+            }
+
+            section {
+                padding-top: 50px; /* Memberi ruang untuk navbar tetap terlihat */
+                padding: 20px;
+                height: 800px;
+                scroll-margin-top: 260px;
+                width: 100%;
+                margin-bottom: -50px;
+                box-sizing: border-box;
+                flex-grow: 0; /* Elemen tidak tumbuh secara otomatis */
+                flex-shrink: 0; /* Elemen tidak mengecil secara otomatis */
+                flex-basis: auto;
+            } 
+
+            @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+        }
+
+            #home {
+                background-color: none;
+            }
+            .produk-container {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 20px;
+              margin-top: -50px;
+              padding: 15px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+          }
+          .produk-item {
+              border: 1px solid #ddd;
+              border-style: outset;
+              border-radius: 5px;
+              box-shadow: 7px 7px 10px rgb(220, 220, 220);
+              transition: box-shadow 0.3s ease;
+              padding: 5px;
+              text-align: center;
+          }
+
+          .produk-item:hover {
+               transform: translateY(-10px);
+               box-shadow: 15px 15px 20px rgb(220, 220, 220);
+          }
+          .produk-item img {
+              max-width: 75%;
+              height: auto;
+              padding-top: 5px;
+          }
+          .produk-item h2 {
+              font-size: 18px;
+              margin: 10px 0;
+          }
+          
+          .produk-item p {
+              font-size: 16px;
+              color:#333333;
+              text-align: center;
+          }
+          .produk-item text-center {
+              justify-content: center;
+              padding-top: 10px;
+          }
+
+          @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+        }
+            #about {
+                background-color: none;
+            }
+
+            .about-section {
+            display: inline-block;
+            padding-bottom: -150px;
+            margin-bottom: 100px;
+            margin-top: -280px;
+            }
+
+            h2 {
+                font-size: 2.7rem;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            p {
+                font-size: 2.5rem;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .grid-container {
+
+                display: grid;
+                grid-template-columns: repeat(3, 1fr); /* 3 kolom dengan lebar yang sama */
+                gap: 10px; /* Jarak antar kolom */
+                margin-top: 50px;
+                border: 3px solid 	#BA55D3;
+                border-radius: 5px;
+                padding: 15px;
+            }
+
+            .column1 {
+                padding: 10px;
+                border: 1px solid #ddd;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 28;
+                margin-left: 70px;
+                border: 1px solid 	#DA70D6;
+                border-radius: 5px;
+                border-style: outset;
+                box-shadow: 7px 7px 10px rgb(148, 0, 211);
+            }
+            .column2 {
+                padding: 35px;
+                border: 1px solid #ddd;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 25;
+                margin-left: 170px;
+                border: 1px solid 	#DA70D6;
+                border-radius: 5px;
+                border-style: outset;
+                box-shadow: 7px 7px 10px rgb(148, 0, 211);
+            }
+            .column2 ul {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20;
+                margin-top: 30px;
+            }
+            .column2 li {
+                margin-top: 10px;
+            }
+            .column3 {
+                padding: 35px;
+                border: 1px solid #ddd;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 25;
+                margin-left: 170px;
+                border: 1px solid 	#DA70D6;
+                border-radius: 5px;
+                border-style: outset;
+                box-shadow: 7px 7px 10px rgb(148, 0, 211);
+            }
+            .column3 ul {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20;
+                margin-top: 30px;
+                list-style-type: none;
+            }
+            .column3 li {
+                margin-top: 10px;
+            }
+
+            .contact {
+                margin-top: -80px;
+                margn-bottom: -250px;
+                background-color: #DDA0DD;
+                
+            }
+            .contact h2 {
+                font-size: 2.7rem;
+                font-family: 'Times New Roman', Times, serif;
+                color: #8A2BE2;
+            }
+
+            #contact us {
+                background-color: none;
+            }
+            .flex-container {
+                display: flex;
+                gap: 10px; /* Jarak antar kolom */
+                margin-top: 150px;
+                margin-bottom: -100px;
+            }
+
+            .column4 {
+                flex: 1; /* Semua kolom memiliki ukuran yang sama */
+                padding: 10px;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 25;
+            }
+            .column4 ul {
+                list-style-type: none;
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20;
+                margin-top: 30px;
+                color: white;
+            }
+            .column4 li {
+                margin-top: 25px;
+            }
+            .column4 a {
+                text-decoration: none;
+            }
+            .column5 {
+                flex: 1; /* Semua kolom memiliki ukuran yang sama */
+                padding: 10px;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 25;
+            }
+            .column5 ul {
+                list-style-type: none;
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20;
+                margin-top: 30px;
+                color: white;
+            }
+            .column5 li {
+                margin-top: 20px;
+            }
+            .icon {
+                width: 10%;
+                display: inline-block;
+                vertical-align: middle;
+                gap: 8px;
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            .text-span {
+                display: inline-block;
+                align-items: center;
+                margin-left: 9px;
+                margin-top: 30px;
+            }
+            .image {
+                width: 10%;
+                display: block;
+                position: relative;
+                gap: 8px;
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            .text-icon {
+                display: inline-flex;
+                align-items: center;
+                margin-left: 50px;
+                margin-top: -50px;
+                
+            }
+            .column6 {
+                flex: 1; /* Semua kolom memiliki ukuran yang sama */
+                padding: 10px;
+                font-family : 'Times New Roman', Times, serif;
+                font-size: 25;
+            }
+
+            @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+        }
+            .gallery-section {
+            display: inline-block;
+            margin-bottom: 100px;
+            margin-top: 350px;
+            }
+
+            #gallery {
+                background-color: none;
+                display: grid;
+            }
+        
+            .gallery {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                margin-top: -260px;
+                margin-bottom: auto;
+            }
+            .gallery-item {
+                width: 200px;
+                height: 150px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+           }
+           .gallery-item:hover {
+                transform: scale(1.1);
+                box-shadow: 15px 15px 20px rgb(220, 220, 220);
+           }
+           .gallery-item img{
+                width: 200px;
+                height: 150px;
+           }
+           .modal {
+                display: none; 
+                position: fixed;
+                z-index: 1; 
+                padding-top: 80px; 
+                left: 0;
+                top: 0;
+                width: 100%; 
+                height: 100%; 
+                overflow: auto;
+                background-color: rgb(0,0,0); 
+                background-color: rgba(0,0,0,0.9); 
+           }
+           .modal-content {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+           }
+           /*untuk tombol close**/
+           .close {
+                position: absolute;
+                top: 65px;
+                right: 35px;
+                color: #f1f1f1;
+                font-size: 40px;
+                font-weight: bold;
+                transition: 0.3s;
+           }
+           .close:hover,
+           .close:focus {
+                color: #bbb;
+                text-decoration: none;
+                cursor: pointer;
+           }
+
+           @media (max-width: 768px) {
+            .section {
+                padding: 20px;
+            }
+        }
+            /** nama toko */
+            .img-responsive {
+                display: flex;
+                width: 5%;
+                height: 5%;
+                padding-left: 10px;
+                padding-top: 4px;
+                font-family : 'Times New Roman', Times, serif;
+                justify-content : space-between;
+            }
+
+            /** text */
+            .text {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 1.2rem;
+                color: black;
+                padding-top: 150px;
+                padding-left: 25px; 
+                text-align: center;
+            }
+
+            .gambar-bayangan {
+                float: center;
+                position: center;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                overflow: hidden;
+                display: inline-table;
+            }
+
+            .tombol-link {
+                background-color: #8A2BE2; 
+                position: relative;
+                float: center;
+                border: none; 
+                color: white; 
+                padding: 15px 32px; 
+                text-align: center; 
+                text-decoration: none; 
+                display: block; 
+                font-size: 20px; 
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                margin-top: -150px; 
+                margin-left: 850px;
+                margin-bottom: 200px;
+                width: 15%;
+                cursor: pointer; 
+                border-radius: 8px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                transition: 0.3s; 
+            }
+            .tombol-link:hover {
+                box-shadow: 0 8px 16px #DEB887;
+                text-decoration: none;
+                position: relative;
+            }
+
+            .kata {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 1.2rem;
+                text-align: center;
+                padding-left: 580px;
+                padding-top: -450px;
+                margin-top: -98px; 
+            }
+            p hr {
+                border-bottom: 5px solid black;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }
+            h1 {
+                font-size: 2.7rem;
+                font-family: 'Times New Roman', Times, serif;
+                color: #8A2BE2;
+            }
+            .view {
+                text-decoration: none;
+            }
+
+            .whatsapp-float {
+                position: fixed;
+                bottom: 20px;
+                right: 20px; 
+                z-index: 1000; 
+            }
+
+            .whatsapp-float img {
+                border-radius: 50%; 
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
+                transition: transform 0.3s; 
+            }
+
+            .whatsapp-float img:hover {
+                transform: scale(1.1);
+            }
+
+            .shopee-float {
+                position: fixed;
+                bottom: 80px;
+                right: 20px; 
+                z-index: 1000; 
+            }
+            .shopee-float img {
+                border-radius: 50%; 
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
+                transition: transform 0.3s; 
+            }
+            .shopee-float img:hover {
+                transform: scale(1.1);
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="nav">
+        <img src="images/shop.png" class="img-responsive">
+            <p><font face ="times new roman" color="white" size="4">Kirana Kebaya</font></p>
+            <ul class="navbar">
+                <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                <li><a href="#gallery" onclick="showSection('gallery')">Gallery</a></li>
+                <li><a href="#about" onclick="showSection('about')">About</a></li> 
+                <li><a href="#contact us" onclick="showSection('contact us')">Contact Us</a></li>
+            </ul>
+        </div>
+        <img src="images/banner.jpg" alt="Gambar" class="gambar-bayangan">
+        </div>
+        
+        <a href="#home" class="tombol-link">Jelajahi Toko</a>
+        
+
+        <section id="home">
+        <div class="produk-container">
+
+            <?php
+
+                $sql = "SELECT * FROM produk ORDER BY nama ASC";
+                if ($result = mysqli_query($conn, $sql)) {
+                if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_array($result)) { ?>
+
+            <div class="produk-item">
+                <img src="images/<?php echo $row['gambar'] ?>" class="img">
+                <h2 align="center"><?php echo $row['nama'] ?></h2>
+
+                <p align="center"><?php echo $row['deskripsi'] ?></p>
+            <div class="text-center">
+                <a href="https://id.shp.ee/bMxjNVJ">
+                <img src="images/shopnow.png" width="160">
+                </a>
+            </div>
+            </div>
+
+            <?php
+            } 
+        
+        }
+    }
+        ?>
+        </div>
+        </section>
+        <section id="gallery" class="gallery-section">
+            <h2>Gallery Kirana Kebaya</h2>
+        <div class="gallery">
+
+
+            <?php
+
+                $sql = "SELECT * FROM produk ORDER BY gambar ASC";
+                if ($result = mysqli_query($conn, $sql)) {
+                if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)) { ?>
+
+            <div class="gallery-item">
+                <img src="images/<?php echo $row['gambar'] ?>" class="img" onclick="openModal(this)" alt="gambar">
+            </div>
+            <div id="modal" class="modal">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img class="modal-content" id="modalImage">
+            </div>
+            <?php
+            }
+        }
+    }
+        ?>
+        <script>
+        // Fungsi untuk membuka modal dan menampilkan gambar yang diklik
+            function openModal(imgElement) {
+            let modal = document.getElementById("modal");
+            let modalImg = document.getElementById("modalImage");
+
+            modal.style.display = "block";
+            modalImg.src = imgElement.src;
+        }
+
+        // Fungsi untuk menutup modal
+            function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+        </script>
+        </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>Kirana Kebaya</h2>
+            <p>Information</p>
+            <div class="grid-container">
+                    <div class="column1">Kirana Kebaya Bali merupakan toko yang menyediakan<br>berbagai jenis kebaya tradisional dan modern khas Bali. Toko ini menawarkan koleksi kebaya yang elegan serta menyediakan aksesoris pendukung seperti selendang khas Bali yang dapat melengkapi penampilan anda!</div>
+                    <div class="column2">Jumlah Karyawan
+                        <ul type ="circle">
+                            <li>Team Live : 4 orang</li>
+                            <li>Admin : 3 orang</li>
+                            <li>Packing : 4 orang</li>
+                        </ul>
+                    </div>
+                    <div class="column3">Info Live Tiktok!
+                        <ul>
+                            <li>Setiap hari</li>
+                            <li>Pagi : 08.00 - 11.00</li>
+                            <li>Sore : 17.00 - 20.00</li>
+                        </ul>
+                    </div>
+
+            </div>
+        </section>
+
+        <section id="contact us" class="contact">
+            <div class="flex-container">
+                    <div class="column4">Lokasi
+                    <a href="https://maps.app.goo.gl/8HNRoU6EoboWpCZx6">
+                        <ul>
+                            <li>Jl. Pulau Bungin</li>
+                            <li>No 11</li>
+                            <li>Pedungan, Denpasar, Bali</li>
+                        </ul>
+                        </a>
+                    </div>
+                    <div class="column5">Info Kontak
+                        <ul>
+                            <li>Telp. 081217352780</li>
+                            <li>Email : kiranakebayabali18@gmail.com</li>
+                            <a href="https://www.tiktok.com/@kiranakebayabali"><img src="images/tiktok.png" class="icon"></a>
+                            <span class="text-span">kiranakebayabali</span>
+                            <a href="https://id.shp.ee/bMxjNVJ"><img src="images/shopee.png" class="image"></a>
+                            <span class="text-icon">kirana_kebayabali09</span>
+                        </ul>
+                    </div>
+                    <div class="column6">
+                    <iframe width="460" height="360" src="https://www.openstreetmap.org/export/embed.html?bbox=115.19186496734619%2C-8.696914495463123%2C115.20812988281251%2C-8.68429376622478&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=16/-8.69060/115.20000" style="text-decoration: none; color: white;"><b>View Larger Map<b></small></a>
+                </div>
+            </div>
+        </section>
+
+        <a href="https://wa.link/6skfvq" target="_blank" class="whatsapp-float">
+            <img src="images/wa.png" alt="WhatsApp" width="50" height="50">
+        </a>
+        <a href="https://id.shp.ee/bMxjNVJ" target="_blank" class="shopee-float">
+            <img src="images/shopee.png" alt="WhatsApp" width="50" height="50">
+        </a>
+
+<script>
+        function showSection(sectionId) {
+        // Menyembunyikan semua section
+        var sections = document.querySelectorAll('section');
+        sections.forEach(function(section) {
+            section.classList.add('next-section');
+            next-sectionElement.style.display = "inline-block";
+        });
+
+        // Menampilkan section yang dipilih
+        var activeSection = document.getElementById(sectionId);
+        activeSection.classList.remove('next-section');
+        next-sectionElement.style.display = "inline-block";
+    }
+</script>
+</div>
+</html>
